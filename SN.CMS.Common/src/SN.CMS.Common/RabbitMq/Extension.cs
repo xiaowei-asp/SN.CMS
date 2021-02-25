@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 
@@ -7,40 +6,32 @@ namespace SN.CMS.Common.RabbitMq
 {
     public static class Extension
     {
-        public static void AddRabbitMq(this ContainerBuilder builder)
+        private static readonly string SectionName = "rabbitmq";
+
+        public static void AddRabbitMq(this IServiceCollection services)
         {
-            builder.Register(context =>
+            IConfiguration configuration;
+            using (var serviceProvider = services.BuildServiceProvider())
             {
-                var configuration = context.Resolve<IConfiguration>();
-                var options = configuration.GetOptions<RabbitMqOption>("rabbitmq");
+                configuration = serviceProvider.GetService<IConfiguration>();
+            }
+            var section = configuration.GetSection(SectionName);
+            var options = configuration.GetOptions<RabbitMqOption>(SectionName);
+            services.Configure<RabbitMqOption>(section);
+            services.AddSingleton(options);
 
-                return options;
-            }).SingleInstance();
-
-            builder.Register(context =>
+            var rabbitFactory = new ConnectionFactory()
             {
-                var options = context.Resolve<RabbitMqOption>();
+                HostName = options.HostName,
+                Port = options.Port,
+                VirtualHost = options.VirtualHost,
+                UserName = options.UserName,
+                Password = options.Password
+            };
 
-                var rabbitFactory = new ConnectionFactory()
-                {
-                    HostName = options.HostName,
-                    Port = options.Port,
-                    VirtualHost = options.VirtualHost,
-                    UserName = options.UserName,
-                    Password = options.Password
-                };
-
-                var connect = rabbitFactory.CreateConnection();
-                return connect;
-
-            }).SingleInstance();
-
-            builder.RegisterType<SNRabbitMqClient>()
-                .As<ISNRabbitMqClient>()
-                .InstancePerLifetimeScope();
-
+            var connect = rabbitFactory.CreateConnection();
+            services.AddSingleton(connect);
+            services.AddSingleton<ISNRabbitMqClient, SNRabbitMqClient>();
         }
-
-        
     }
 }

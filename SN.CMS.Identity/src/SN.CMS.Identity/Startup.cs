@@ -18,6 +18,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using SN.CMS.Common.Authentications;
+using SN.CMS.Common.Domain;
+using SN.CMS.Common.ErrorHandler;
 using SN.CMS.Common.RabbitMq;
 using SN.CMS.Common.Redis;
 using SN.CMS.Identity.Domain;
@@ -40,6 +42,7 @@ namespace SN.CMS.Identity
             services.AddHttpContextAccessor();
             services.AddRedis();
             services.AddJwt();
+            services.Configure<DbOptions>(Configuration.GetSection("sqlite"));
             services.AddRabbitMq();
             services.AddMvcCore()
                 .AddNewtonsoftJson(o =>
@@ -55,10 +58,16 @@ namespace SN.CMS.Identity
                 .AddDataAnnotations()
                 .AddApiExplorer();
             services.AddAuthorization();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", cors =>
+                        cors.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader());
+            });
             //services.AddSingleton<IPasswordHasher<User>,PasswordHasher<User>>();
-            services.AddDbContext<SNCMSDbContext>(options => 
-                options.UseSqlite(Configuration.GetConnectionString("sqlite"))
-                );
+            services.AddDbContext<SNCMSDbContext>();//Configuration.GetSection("sqlite").Value
         }
 
 
@@ -76,13 +85,14 @@ namespace SN.CMS.Identity
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SN.CMS.Identity", "SN.CMS.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SN.CMS.Common", "SN.CMS.Common\src\SN.CMS.Common\SN.CMS.Common.csproj", "{0F134DF0-0C44-4516-A48E-191C6E6E6884}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SN.CMS.Common.Tests", "SN.CMS.Common\tests\SN.CMS.Common.Tests\SN.CMS.Common.Tests.csproj", "{98C33006-E70B-4F77-A883-8F104FBC6FCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SN.CMS.Common.Tests", "SN.CMS.Common\tests\SN.CMS.Common.Tests\SN.CMS.Common.Tests.csproj", "{98C33006-E70B-4F77-A883-8F104FBC6FCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

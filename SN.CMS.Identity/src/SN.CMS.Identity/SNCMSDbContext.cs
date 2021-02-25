@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SN.CMS.Common.Domain;
+using SN.CMS.Identity.DbMap;
 using SN.CMS.Identity.Domain;
 using SN.CMS.Identity.Messages.Commands;
 
@@ -24,8 +25,16 @@ namespace SN.CMS.Identity
 
             optionsBuilder.UseSqlite(_dbOptions.Value.ConnectionString);
         }
-        public DbSet<User> User { get; set; }
-        public DbSet<RefreshToken> RefreshToken { get; set; }
-        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new RefreshTokenMap());
+
+            //modelBuilder.ApplyConfiguration(new ProductsReportConfiguration(_jsonSerializer));
+        }
+
     }
 }

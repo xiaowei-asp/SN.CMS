@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 using SN.CMS.Common.Domain.AggregateRoots;
-using SN.CMS.Identity.Domain;
 
-namespace SN.CMS.Identity.Messages.Commands
+namespace SN.CMS.Identity.Domain
 {
     public class RefreshToken : AggregateRoot
     {

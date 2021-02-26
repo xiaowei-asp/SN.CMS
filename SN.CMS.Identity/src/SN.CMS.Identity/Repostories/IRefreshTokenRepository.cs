@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using SN.CMS.Identity.Messages.Commands;
+﻿using System.Threading.Tasks;
+using SN.CMS.Identity.Domain;
 
 namespace SN.CMS.Identity.Repostories
 {

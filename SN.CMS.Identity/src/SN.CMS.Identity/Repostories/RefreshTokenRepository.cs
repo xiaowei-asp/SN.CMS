@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SN.CMS.Identity.Messages.Commands;
+using SN.CMS.Identity.Domain;
 
 namespace SN.CMS.Identity.Repostories
 {

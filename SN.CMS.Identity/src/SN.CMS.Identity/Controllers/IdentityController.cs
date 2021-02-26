@@ -21,9 +21,10 @@ namespace SN.CMS.Identity.Controllers
 
         [HttpGet("me")]
         [JwtAuth]
-        public ApiRequestResult Get()
+        public async Task<ApiRequestResult> Get()
         {
-            return ApiRequestResult.Success($"Your id: '{UserId:N}'.");
+            var userName = await _identityService.GetAsync(UserId.ToString());
+            return ApiRequestResult.Success(userName,"用户信息获取成功");
         }
 
         [HttpPost("sign-up")]
@@ -37,6 +38,7 @@ namespace SN.CMS.Identity.Controllers
         public async Task<ApiRequestResult> SignIn(SignIn command)
         {
             var result = await _identityService.SignInAsync(command.Name, command.Password);
+
             return ApiRequestResult.Success(result,$"用户{command.Name}登录成功");
         }
 

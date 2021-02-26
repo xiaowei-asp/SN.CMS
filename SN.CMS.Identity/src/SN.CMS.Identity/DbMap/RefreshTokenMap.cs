@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SN.CMS.Identity.Messages.Commands;
+using SN.CMS.Identity.Domain;
 
 
 namespace SN.CMS.Identity.DbMap

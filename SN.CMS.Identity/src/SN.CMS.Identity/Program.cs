@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using SN.CMS.Common.Logging;
 using SN.CMS.Common.Startup;
 
 namespace SN.CMS.Identity
@@ -17,6 +18,7 @@ namespace SN.CMS.Identity
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseLogging();
                 });
     }
 }

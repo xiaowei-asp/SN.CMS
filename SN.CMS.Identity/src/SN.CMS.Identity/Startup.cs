@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Serilog;
 using SN.CMS.Common.Authentications;
 using SN.CMS.Common.Domain;
 using SN.CMS.Common.ErrorHandler;
@@ -78,7 +79,7 @@ namespace SN.CMS.Identity
             }
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
-
+            app.UseSerilogRequestLogging();
             app.UseRouting();
 
             app.UseAuthorization();

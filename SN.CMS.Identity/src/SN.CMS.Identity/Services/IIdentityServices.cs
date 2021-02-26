@@ -10,5 +10,6 @@ namespace SN.CMS.Identity.Services
         Task SignUpAsync(Guid id, string name, string password, string role = Role.User);
 
         Task<JsonWebToken> SignInAsync(string name, string password);
+        Task<string> GetAsync(string userId);
     }
 }

@@ -45,11 +45,13 @@ namespace SN.CMS.Common.ErrorHandler
                     break;
             }
             var response = new { code = errorCode, message = exception.Message };
-            var payload = JsonConvert.SerializeObject(response);
+            var reponseJson = JsonConvert.SerializeObject(response);
+
+            var result = ApiRequestResult.Error(exception.Message);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
 
-            return context.Response.WriteAsync(payload);
+            return context.Response.WriteAsync(result.ToString());
         }
     }
 }

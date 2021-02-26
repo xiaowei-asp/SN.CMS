@@ -58,6 +58,7 @@ namespace SN.CMS.Identity.Services
 
             //发布用户注册数据到队列
             _snRabbitMqClient.Publish(JsonConvert.SerializeObject(new SignedUp(id, name, role)));
+
             
         }
 

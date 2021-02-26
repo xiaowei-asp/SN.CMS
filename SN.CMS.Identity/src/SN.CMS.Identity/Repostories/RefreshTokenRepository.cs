@@ -20,7 +20,10 @@ namespace SN.CMS.Identity.Repostories
         }
 
         public async Task AddAsync(RefreshToken token)
-            => await _context.Set<RefreshToken>().AddAsync(token);
+        {
+            await _context.Set<RefreshToken>().AddAsync(token);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task UpdateAsync(RefreshToken token)
         {

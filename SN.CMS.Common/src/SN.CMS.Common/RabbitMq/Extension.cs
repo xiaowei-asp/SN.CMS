@@ -29,7 +29,7 @@ namespace SN.CMS.Common.RabbitMq
                 Password = options.Password
             };
 
-            var connect = rabbitFactory.CreateConnection();
+            var connect = rabbitFactory.CreateConnectionAsync();
             services.AddSingleton(connect);
             services.AddSingleton<ISNRabbitMqClient, SNRabbitMqClient>();
         }
